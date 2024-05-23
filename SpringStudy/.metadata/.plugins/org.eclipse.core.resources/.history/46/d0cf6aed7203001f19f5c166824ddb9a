@@ -1,0 +1,6 @@
+package com.smhrd.myapp.repo;
+
+
+public interface MemberRepository {
+
+}

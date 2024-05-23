@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <div id="change_main">
+            <h1>
+                회원가입 화면입니다.
+            </h1>
+            <button id="change_join">회원가입</button><br>
+            <button id="change_login">로그인</button>
+        </div>
+    </div>
+    
+    <script>
+        function change_login() {
+            document.getElementById("change_main").innerHTML = `
+                <div id="change_main">
+                    <h1>
+                        로그인 화면입니다.
+                        <input class="login animated fadeInUp animate2 loginfont"
+							name="mem_id" type="text" required placeholder="아이디" value="">
+                    </h1>
+                    <button id="change_join">회원가입</button><br>
+                    <button id="change_login">로그인</button>
+                </div>`;
+            document.getElementById("change_join").addEventListener("click", change_join);
+        }
+        
+        function change_join() {
+            document.getElementById("change_main").innerHTML = `
+                <div id="change_main">
+                    <h1>
+                        회원가입 화면입니다.
+                    </h1>
+                    <button id="change_join">회원가입</button><br>
+                    <button id="change_login">로그인</button>
+                </div>`;
+            document.getElementById("change_login").addEventListener("click", change_login);
+        }
+
+        document.getElementById("change_login").addEventListener("click", change_login);
+        document.getElementById("change_join").addEventListener("click", change_join);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>선호도 조사 시스템</h1>
+	<fieldset>
+		<form action="result.jsp" method="post">
+			<table>
+				<tr>이름</tr>
+			</table>
+			
+		</form>
+	</fieldset>
+</body>
+</html>

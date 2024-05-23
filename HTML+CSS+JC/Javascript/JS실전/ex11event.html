@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1 id = "txt">변경할 데이터</h1>
+    <script>
+        // 1. h1태그에 마우스를 올렸을 때 글자색을 파란색으로 변경
+        $("#txt").on("mouseover",function(){
+            $("#txt").css("color","blue");
+            //alert("마우스가 올라왔습니다.")
+        })
+        // 2. 마우스를 땠을 때 글자색을 검정색으로 변경
+        $("#txt").on("mouseout",function(){
+            $("#txt").css("color","black");
+        })
+        // 3. 마우스로 클릭 했을 때 배경색을 검은색으로,글자색은 흰색 변경
+        $("#txt").on("click",function(){
+            $("#txt").css("color","white");
+            $("#txt").css("background-color","black")
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="txt">0</p>
+    <button id="plus" onclick="inc()">증가</button>
+    <button id="minus" onclick="decrease()">감소</button>
+    <script>
+        // 기존 주석과 동일한 기능을 유지하면서 코드 수정
+        function inc(){
+            // p태그의 내용을 가져와서 숫자로 변경
+            let num = Number(document.getElementById("txt").innerHTML);
+            // 변경된 데이터에 1을 더하고 출력
+            document.getElementById("txt").innerHTML = num + 1;
+        }
+        
+        function decrease(){
+            // p태그의 내용을 가져와서 숫자로 변경
+            let num = Number(document.getElementById("txt").innerHTML);
+            // 만약 숫자가 0 이하면 0 유지, 아니면 1을 빼고 출력
+            if(num <= 0){
+                document.getElementById("txt").innerHTML = 0;
+            }else{
+                document.getElementById("txt").innerHTML = num - 1;
+            }
+        }
+    </script>
+</body>
+</html>

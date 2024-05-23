@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <SCript>
+        // 배경색 바꾸는 방법
+        document.getElementsByTagName("body")[0].style.backgroundColor = "silver"
+
+        // 1. 사용자에게 원하는 색깔 3가지 입력(빨강,파랑,초록)
+          let color = prompt("색깔을 적어주세요(빨강,초록,파랑)")
+        // 2. 입력한 값의 색으로 배경
+            if(color=="빨강"){
+                document.getElementsByTagName("body")[0].style.backgroundColor = "red"
+            }
+            else if(color=="초록"){
+                document.getElementsByTagName("body")[0].style.backgroundColor = "green"
+            }
+            else {
+                document.getElementsByTagName("body")[0].style.backgroundColor = "blue"
+            }
+
+
+    </SCript>
+</body>
+</html>

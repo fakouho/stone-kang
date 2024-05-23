@@ -1,0 +1,39 @@
+package com.smhrd.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.smhrd.db.BookMapper;
+import com.smhrd.db.BoookMapper;
+import com.smhrd.model.BoardVO;
+import com.smhrd.model.BookVO;
+
+
+public class BookControlloer {
+
+	@Autowired
+	private BookMapper mapper;
+	
+	
+	@RequestMapping("/bookList.do")
+	public void bookList(@PathVariable("idx") int idx) {
+	    mapper.boardDelete(idx);
+	    
+	    return "redirect:/";
+	}
+	@RequestMapping("/") 
+	public String board(Model model) {
+		List<BookVO> list = mapper.bookList();
+		model.addAttribute("list", list);
+		return "board";
+	}
+
+}

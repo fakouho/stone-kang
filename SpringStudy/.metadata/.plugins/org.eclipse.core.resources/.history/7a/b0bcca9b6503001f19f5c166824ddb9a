@@ -1,0 +1,19 @@
+spring.application.name=SpringSecurity
+
+# 1. server port 번호 설저8088
+server.port=8088
+
+# 2. view resolver 설정
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+# 3. context path(context root)값 설정
+server.servlet.context-path=/security
+# 4. JPA 로직을 console에 출력해주는 설정
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+# 5. JPA 작동시키는 설정(필수)
+# create,update,none
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect

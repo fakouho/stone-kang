@@ -1,0 +1,31 @@
+package com.smhrd.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import com.smhrd.db.BookMapper;
+
+import com.smhrd.model.BookVO;
+
+
+public class BookControlloer {
+
+	@Autowired
+	private BookMapper mapper;
+	
+	
+	@RequestMapping("/bookList.do")
+	public void bookList(@PathVariable("idx") int idx) {
+	    mapper.boardDelete(idx);
+	    
+	    return "redirect:/";
+	}
+	@RequestMapping("/") 
+	public String board(Model model) {
+		List<BookVO> list = mapper.boardList();
+		model.addAttribute("list", list);
+		return "board";
+	}
+
+}

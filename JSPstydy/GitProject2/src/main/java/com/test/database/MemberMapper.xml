@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.database.DAO">
+
+	<insert id="mem_join" parameterType="com.test.model.MemberVO">
+		insert into
+		tb_member(mem_id, mem_pw, mem_name, mem_phone, mem_birthdate,
+		mem_addr, mem_email, mem_nick, mem_gender, height, weight) values
+		(#{mem_id},#{mem_pw},#{mem_name},#{mem_phone}, #{mem_birthdate},
+		#{mem_addr}, #{mem_email}, #{mem_nick}, #{mem_gender}, #{height},
+		#{weight})
+	</insert>
+
+	<select id="mem_login" parameterType="com.test.model.MemberVO"
+		resultType="com.test.model.MemberVO">
+		select mem_id from tb_member
+		where mem_id = #{mem_id} and mem_pw = #{mem_pw}
+	</select>
+
+    <insert id="salt_join" parameterType="com.test.model.SaltVO">
+    	insert into tb_salt(mem_id, mem_salt)
+    	values (#{mem_id}, #{mem_salt})
+    </insert>
+
+    <select id="salt_login" parameterType="com.test.model.SaltVO" resultType="com.test.model.SaltVO">
+        select mem_salt
+        from tb_salt
+        where mem_id = #{mem_id}
+    </select>
+    
+    <select id="get_mem_height" resultType="com.test.model.MemberVO" parameterType="com.test.model.MemberVO">
+        select height from tb_member where mem_id = #{mem_id}
+    </select>
+    
+    
+    
+    <!-- 안쓰는 코드 -->
+	<update id="update" parameterType="com.test.model.MemberVO"> update b_member set pw =
+		#{pw}, tel = #{tel}, address = #{address} where email = #{email}
+	</update>
+	<select id="selectall" resultType="com.test.model.MemberVO"> select email, tel, address
+		from b_member
+	</select>
+</mapper>

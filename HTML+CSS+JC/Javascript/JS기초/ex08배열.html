@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // 자바스크립트의 배열은 크기와 타입을 지정하지 않는다.
+        let arr = [1,2,3,4]
+        // 1. 특정 데이터에 접급 -> 인덱스 사용
+        console.log(arr[3]); 
+
+        // 배열 사용시 유용한 함수
+        // 1. 배열의 길이 구히가 -> length
+        console.log("배열의 길이는",arr.length);
+
+        // 2. 배열의 마지막 값 추출
+        console.log("마지막 추출",arr.pop());
+
+        // 3. 배열의 마지막 값을 입력
+        arr.push(10)
+        console.log(arr);
+
+        // 4. 배열의 특정데이터 포함여부 검사
+        console.log(arr.includes(10));
+
+    </script>
+</body>
+</html>

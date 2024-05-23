@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        /* 
+            display : flex;
+            > 레이아웃 배치 전용 기능
+            (1) container
+                -display : flex
+                -flex-direction 
+                > 아이템 역순
+                > row/row-reverse/column/column-reverse
+                -flex-wrap 
+                > 아이템이 컨테이너의 한줄을 넘어설대 줄 바꿈 설정
+                >nowrap/wrap/wrap-reverse
+            (2) item
+            -flex-basis
+            > 아이템의 기본 크기를 설정
+            > row축으로 아이템이 배치될때는 너비값 설정
+            > column축으로 아이템이 배치될때는 높이값 설정
+            - flex-grow
+            > 내가 설정한 item의 크기를 제외한 나머지 여백을 기준으로
+              비율을 나눠서 item에 포함시키는 개념
+            > 컨테이너 안쪽에 여백이 사라짐.
+        */
+        #black{
+            width: 500px;
+            height: 100px;
+            background-color: floralwhite;
+            display: flex;
+            /*flex-direction: row-reverse;*/
+        }
+        /* 
+            item의 높이값은 기본적으로 container의 높이를 따른다.
+
+        */
+        #red{
+            width: 100px;
+            flex-basis: 33.333%;
+            background-color: red;
+            flex-grow: 1;
+        }
+        #green{
+            width: 100px;
+            flex-grow: 2;
+            background-color: green;
+        }
+        #blue{
+            width: 100px;
+            flex-grow: 1;
+            background-color: blue;
+        }
+
+    </style>
+</head>
+<body>
+    <div id = "black">
+        <div id="red"></div>
+        <div id="green"></div>
+        <div id="blue"></div>
+
+
+    </div>
+    <span>과자</span>
+    <div>과자</div>
+</body>
+</html>

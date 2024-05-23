@@ -1,0 +1,19 @@
+package com.smhrd.myapp.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+@Controller
+public class ServiceController {
+
+	@PostMapping("path")
+	public String login() {
+		
+		
+		return "redirect:/dashboard";
+	}
+	
+	
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>선호도 조사 시스템</h1>
+	
+		<form action="result.jsp" method="post">
+		<table border="1">
+	
+            <tr>
+                <td>이름</td>
+                <td>박병관</td>
+            </tr>
+            <tr>
+                <td>좋아하는 과일</td>
+                <td>
+                	<input type="checkbox" value="사과">
+                </td>
+            </tr>
+            <tr>
+              <td>전송</td>
+            </tr>
+        </table>
+			
+		</form>
+	
+</body>
+</html>

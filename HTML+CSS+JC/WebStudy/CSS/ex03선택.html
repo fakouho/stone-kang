@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*  선택자의 종류  */
+
+        /*  (1) 전체 선택자 : 모든 요소를 선택 => * /*/
+        *{
+            color: green;
+        }
+
+        /*  (2) 태그 선택자 : 특정 태그를 선택  
+        => 태그 이름을 사용 */
+        li{
+            color : violet;
+        }
+        /* 선택자들을 구분해서 지정해줘야 하는 경우 
+        => 클래스 / 아이디
+
+        클래스 => 중복 가능, 여러 요소에 한가지 디자인을 넣을 떄 용이
+                재사용성이 뛰어남
+        아이디 => 중복 불가능, 한 문서당 한번만 
+        */
+
+        /* (3) 클래스 선택자 : .기호 사용 */
+        .dinner{
+            color : red;
+        }
+        /* (4) 아이디 선택자 : #기호 사용 */
+        #choice{
+            color :blue;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>CSS</h1>
+    <p>웹페이지를 꾸며주는 스타일 시트 언어</p>
+    <ul>
+        <li>CSS 기본구조</li>
+        <li>CSS 선택자</li>
+        <li>CSS 스타일</li>
+    </ul>
+
+    <h1>오늘 뭐먹지?</h1>
+    <ul>
+        <li class="dinner" id ="choice">연어</li>
+        <li>참치</li>
+        <li>샐러드</li>
+    </ul>
+</body>
+</html>

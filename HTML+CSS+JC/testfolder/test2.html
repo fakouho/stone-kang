@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+       .contan {
+            border: 2px solid black;
+            width: 500px;
+            height: 500px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .SlideConnection {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .SlideConnection .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .SlideConnection .slider li {
+            flex: 0 0 500px;
+            height: 500px;
+        }
+
+        .sliderImg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .arrow>a {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .arrow>a:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .arrow>a.sliderBack {
+            left: 0;
+        }
+
+        .arrow>a.sliderNext {
+            right: 0;
+        } 
+    </style>
+</head>
+<body>
+    <div class="contan">
+        <div class="SlideConnection">
+            <ul class="slider">
+                <li><img class="sliderImg" src="images/panel12.png" alt=""></li>
+                <li><img class="sliderImg" src="https://via.placeholder.com/500x500.png" alt=""></li>
+                <li><img class="sliderImg" src="images/penel31.png" alt=""></li>
+                <li><img class="sliderImg" src="images/panel22.png" alt=""></li>
+                <li><img class="sliderImg" src="https://via.placeholder.com/500x500.png" alt=""></li>
+                <li><img class="sliderImg" src="images/panel21.png" alt=""></li>
+            </ul>
+        </div>
+        <div class="arrow">
+            <a href="#" class="sliderBack">이전</a>
+            <a href="#" class="sliderNext">다음</a>
+        </div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        const contan = document.querySelector('.contan');
+        const slider = contan.querySelector('.slider');
+        const slideItems = contan.querySelectorAll('.slider li');
+        const prevBtn = contan.querySelector('.arrow .sliderBack');
+        const nextBtn = contan.querySelector('.arrow .sliderNext');
+        let currentIndex = 0;
+        let totalSlides = slideItems.length;
+        let slideWidth = slideItems[0].clientWidth;
+        let intervalId;
+
+        // 슬라이더 너비 설정
+        slider.style.width = `${slideWidth * totalSlides}px`;
+
+        // 다음/이전 버튼 클릭 이벤트 핸들러 등록
+        nextBtn.addEventListener('click', moveSlide);
+        prevBtn.addEventListener('click', moveSlide);
+
+        // 다음 또는 이전 슬라이드로 이동하는 함수
+        function moveSlide(event) {
+            clearInterval(intervalId); // 자동 슬라이드 타이머 해제
+            // 다음 또는 이전 슬라이드의 인덱스 계산
+            currentIndex = (currentIndex + (event.target.className === 'sliderNext' ? 1 : -1) + totalSlides) % totalSlides;
+            let newPosition = -currentIndex * slideWidth;
+            slider.style.transition = 'transform 0.5s ease'; // 슬라이드 애니메이션 추가
+            slider.style.transform = `translateX(${newPosition}px)`; // 슬라이드 이동
+            // 마지막 슬라이드에 도달한 경우
+            if (currentIndex === totalSlides - 1) {
+                nextBtn.disabled = true; // 다음 버튼 비활성화
+                // 슬라이드 이동이 완료되면
+                slider.addEventListener('transitionend', function transitionEndHandler() {
+                    currentIndex = 0; // 현재 인덱스 초기화
+                    newPosition = 0; // 슬라이드 위치 초기화
+                    slider.style.transition = 'none'; // 애니메이션 제거
+                    slider.style.transform = `translateX(${newPosition}px)`; // 슬라이드 위치 조정
+                    nextBtn.disabled = false; // 다음 버튼 활성화
+                    slider.removeEventListener('transitionend', transitionEndHandler); // 이벤트 핸들러 제거
+                });
+            }
+            startAutoSlide(); // 자동 슬라이드 재시작
+        }
+
+        // 자동 슬라이드 시작 함수
+        function startAutoSlide() {
+            clearInterval(intervalId); // 기존 타이머 해제
+            intervalId = setInterval(() => moveSlide({ target: { className: 'sliderNext' } }), 3000); // 3초마다 다음 슬라이드로 이동
+        }
+
+        startAutoSlide(); // 페이지 로드 시 자동 슬라이드 시작
+
+        // 슬라이드 또는 버튼 클릭 시 자동 슬라이드 재시작
+        slider.addEventListener('click', () => {
+            clearInterval(intervalId); // 기존 타이머 해제
+            startAutoSlide(); // 자동 슬라이드 재시작
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.database.DAO">
+
+	<insert id="mem_join" parameterType="com.test.model.MemberVO">
+		insert into
+		tb_member(mem_id, mem_pw, mem_name, mem_phone, mem_birthdate,
+		mem_addr, mem_email, mem_nick, mem_gender, height, weight) values
+		(#{mem_id},#{mem_pw},#{mem_name},#{mem_phone}, #{mem_birthdate},
+		#{mem_addr}, #{mem_email}, #{mem_nick}, #{mem_gender}, #{height},
+		#{weight})
+	</insert>
+
+	<select id="mem_login" parameterType="com.test.model.MemberVO"
+		resultType="com.test.model.MemberVO">
+		select mem_id from tb_member
+		where mem_id = #{mem_id} and mem_pw = #{mem_pw}
+	</select>
+
+    <insert id="salt_join" parameterType="com.test.model.SaltVO">
+    	insert into tb_salt(mem_id, mem_salt)
+    	values (#{mem_id}, #{mem_salt})
+    </insert>
+
+    <select id="salt_login" parameterType="com.test.model.SaltVO" resultType="com.test.model.SaltVO">
+        select mem_salt
+        from tb_salt
+        where mem_id = #{mem_id}
+    </select>
+    
+	<!-- resultType의 동작원리 1. MemberVO vo = new MemberVO() 2. vo.setEmail(email) 
+		3. vo.setTel(tel) 4. vo.setAddress(address) * 만약 조회한 column과 이름이 일치하는 필드명이 
+		객체안에 존재하지 않는다면, 동작하지 않고, 에러가 발생!!! >> 해결할 수 있는 방법은 (1) 객체 필드명 바꾸기 (2) sql구문에서 
+		alias부여하기 -->
+	<update id="update" parameterType="com.test.model.MemberVO"> update b_member set pw =
+		#{pw}, tel = #{tel}, address = #{address} where email = #{email}
+	</update>
+	<select id="selectall" resultType="com.test.model.MemberVO"> select email, tel, address
+		from b_member
+	</select>
+</mapper>

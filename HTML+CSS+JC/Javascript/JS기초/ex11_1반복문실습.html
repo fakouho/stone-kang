@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. 랜덤 생성
+        let random = Math.floor(Math.random()*100)+1
+        while(true){
+             // 2. 입력문 생성
+            let dab=prompt("숫자를 입력해주세요!")
+            // 3. 비교결과 출력
+            if(Number(dab)>random){
+                // 3-1. 랜덤값보다 작다면 up이라고 알림
+                alert("입력한 숫자보다 작은 수입니다.")
+            }
+            else if(Number(dab)<random){
+                // 3-2. 랜덤값보다 크다고 down이라고 알림
+                alert("입력한 숫자보다 큰 수입니다")   
+            }else{
+                // 4. 랜덤값과 입력값이 같다면 성공 출력문과 break
+                alert("정답입니다.축하합니다!")
+                break;
+            }
+        }    
+        // while, 조건문, break, aler, prompt , 형변환
+        
+    </script>
+</body>
+</html>

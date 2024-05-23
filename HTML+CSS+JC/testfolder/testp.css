@@ -1,0 +1,20 @@
+.container {
+    width: 300px;
+    display: flex;
+    transition: transform 0.5s;
+    overflow: hidden; /* 이미지가 넘칠 경우를 대비하여 오버플로우를 숨깁니다. */
+}
+
+.inner {
+    width: 300px; /* 이미지 크기를 컨테이너와 같게 설정합니다. */
+    flex: 0 0 auto;
+}
+
+.inner img {
+    width: 100%;
+}
+
+/* 이미지를 화면에서 숨기는 스타일 */
+.hidden {
+    display: none;
+}

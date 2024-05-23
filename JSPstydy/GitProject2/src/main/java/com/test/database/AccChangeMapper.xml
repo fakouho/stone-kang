@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mapper.AccChangeMapper">
+    <insert id="acc_ch_input" parameterType="com.test.model.AccChangeVO">
+    	insert into tb_accumulated_change(mem_id, height, weight, ch_date, ex_calories)
+        values (#{mem_id}, #{height}, #{weight}, #{ch_date}, #{ex_calories})
+    </insert>
+</mapper>

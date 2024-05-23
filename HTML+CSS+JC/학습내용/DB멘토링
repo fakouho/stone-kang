@@ -1,0 +1,707 @@
+> 모델링 주소 
+
+URL : https://aquerytool.com/aquerymain/index/?rurl=6e7f78c4-5eda-44c2-8d63-d85d5c85f7b9&
+Password : 4j21b0
+
+
+
+
+(리눅스에서 MySQL 설치)
+# yum install mysql* mysql-server* 
+# yum groupinstall 'mysql server'
+
+(윈도우 서버에서 MySQL 설치)
+설치관련 : mysql installer 
+
+-------------------------------------------------
+(DB 계정 생성)
+
+use mysql;
+
+
+# (1) DB 생성 
+# (2) User 생성 
+# (3) User 권한 부여 
+# (4) 권한 반영 
+
+# DB 생성
+create database fit_db;
+show databases;
+
+# User 생성
+create user fit_user@localhost identified by '1234';
+create user fit_user@210.13.50.150 identified by '1234';
+create user fit_user@'210.13.50.*' identified by '1234';
+create user fit_user@'%' identified by '1234';
+
+# User 권한 부여 
+
+grant select, update on fit_db.* to fit_user@localhost;
+grant all privileges on fit_db.* to fit_user@localhost;
+
+# 권한 반영 
+flush privileges;
+
+drop database fit_db;
+drop user fit_user@localhost;
+
+[11][12][13][14][15][16]
+[17][18][19][20][21][22][23][24][25][26][27][28][29][30]
+
+> 데이터베이스 설계순서
+  요구사항분석 > 개념설계 > 논리설계 > 물리설계 > 데이터베이스구현 (개.눈.물)
+
+> ERD
+  ER-Diagram 
+  Entity Relationship Diagram
+
+> DDL, Data Definition Language    - 정의 명령어 : CREATE, ALTER, DROP (TABLE)
+  DML, Data Manipulation Language  - 조작 명령어 : INSERT, UPDATE, DELETE *SELECT는 아님(주의!: 정처기/SQLD시험에서 SELECT를 DML로 취급함)
+  DCL, Data Control Language       - 제어 명령어 : GRANT, REVOKE, COMMIT, ROLLBACK
+  DQL, Data Query Language         - 질의 명령어 : SELECT 문
+  TCL, Transaction Control Language : DCL 중에서 COMMIT과 ROLLBACK을 따로 떼어서 TCL이라고 부르기도 함.
+
+> VO = DTO = Java Model = Java Bean = POJO 
+
+
+
+
+
+# 키, 체중 데이터 타입 
+
+키 : 183.5  ... decimal(4,1) = numeric(4,1)
+체중 : 73.8 ... decimal(4,1) = numeric(4,1)
+
+
+
+
+# 회원구분(mem_role) : 일반회원('U', User), 특별회원('V', VIP), 관리자('A', Administrator)
+
+# int, int unsigned 차이 
+
+  int          ... 32 bit 정수(-2147483648~-1, 0~2147483647)  * 대략 -21억~+21억
+  int unsigned ... 32 bit 정수(0~2147483647 + 2147483648)     * 대략     0~+42억 
+
+
+# DATETIME, TIMESTAMP 
+
+  DATETIME  : '2024-03-14 10:00:00'
+  TIMESTAMP : '2024-03-14 10:00:00' UTC+09:00 (TIMEZONE 정보 포함)
+  
+
+  Relation      : 일반적인 관계('날씨와 우산판매량의 관계')
+  Relations     : 국가적인 관계(relations) between the two countries.
+  Relationship  : 개인적인 관계 
+
+
+> 회원(tb_member)   ---------- 누적 운동(tb_accumulated_exercise)
+
+
+     1               :          0, 1, N (Numerous,여러개의)
+
+
+  VO(Value Object)
+  DTO(Data Transfer Object)
+  POJO(Plain Old Java Object)
+
+  UserVO.java, MemberDTO.java 
+
+
+  // 회원정보 
+public class MemberDTO {
+
+    // 회원 아이디 
+    private String mem_id;
+
+    // 회원 비밀번호 
+    private String mem_pw;
+
+    // 회원 이름 
+    private String mem_name;
+
+    // 회원 연락처 
+    private String mem_phone;
+
+    // 회원 생년월일 
+    private Date mem_birthdate;
+
+    // 회원 주소 
+    private String mem_addr;
+
+    // 회원 이메일 
+    private String mem_email;
+
+    // 회원 닉네임 
+    private String mem_nick;
+
+    // 회원 성별 
+    private String mem_gender;
+
+    // 회원 키 
+    private BigDecimal height;
+
+    // 회원 체중 
+    private BigDecimal weight;
+
+    // 체질량지수 
+    private BigDecimal bmi;
+
+    // 근육량 
+    private BigDecimal muscle;
+
+    // 체지방률 
+    private BigDecimal fat_per;
+
+    // 회원 가입일자 
+    private Timestamp joined_at;
+
+    // 회원 구분 
+    private String mem_role;
+
+    public String getMemId() {
+        return mem_id;
+    }
+
+    public void setMemId(String memId) {
+        this.mem_id = mem_id;
+    }
+
+    public String getMemPw() {
+        return mem_pw;
+    }
+
+    public void setMemPw(String memPw) {
+        this.mem_pw = mem_pw;
+    }
+
+    public String getMemName() {
+        return mem_name;
+    }
+
+    public void setMemName(String memName) {
+        this.mem_name = mem_name;
+    }
+
+    public String getMemPhone() {
+        return mem_phone;
+    }
+
+    public void setMemPhone(String memPhone) {
+        this.mem_phone = mem_phone;
+    }
+
+    public Date getMemBirthdate() {
+        return mem_birthdate;
+    }
+
+    public void setMemBirthdate(Date memBirthdate) {
+        this.mem_birthdate = mem_birthdate;
+    }
+
+    public String getMemAddr() {
+        return mem_addr;
+    }
+
+    public void setMemAddr(String memAddr) {
+        this.mem_addr = mem_addr;
+    }
+
+    public String getMemEmail() {
+        return mem_email;
+    }
+
+    public void setMemEmail(String memEmail) {
+        this.mem_email = mem_email;
+    }
+
+    public String getMemNick() {
+        return mem_nick;
+    }
+
+    public void setMemNick(String memNick) {
+        this.mem_nick = mem_nick;
+    }
+
+    public String getMemGender() {
+        return mem_gender;
+    }
+
+    public void setMemGender(String memGender) {
+        this.mem_gender = mem_gender;
+    }
+
+    public BigDecimal getHeight() {
+        return height;
+    }
+
+    public void setHeight(BigDecimal height) {
+        this.height = height;
+    }
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
+    public BigDecimal getBmi() {
+        return bmi;
+    }
+
+    public void setBmi(BigDecimal bmi) {
+        this.bmi = bmi;
+    }
+
+    public BigDecimal getMuscle() {
+        return muscle;
+    }
+
+    public void setMuscle(BigDecimal muscle) {
+        this.muscle = muscle;
+    }
+
+    public BigDecimal getFatPer() {
+        return fat_per;
+    }
+
+    public void setFatPer(BigDecimal fatPer) {
+        this.fat_per = fat_per;
+    }
+
+    public Timestamp getJoinedAt() {
+        return joined_at;
+    }
+
+    public void setJoinedAt(Timestamp joinedAt) {
+        this.joined_at = joined_at;
+    }
+
+    public String getMemRole() {
+        return mem_role;
+    }
+
+    public void setMemRole(String memRole) {
+        this.mem_role = mem_role;
+    }
+
+    // tb_member 모델 복사
+    public void CopyData(tb_member param)
+    {
+        this.mem_id = param.getMemId();
+        this.mem_pw = param.getMemPw();
+        this.mem_name = param.getMemName();
+        this.mem_phone = param.getMemPhone();
+        this.mem_birthdate = param.getMemBirthdate();
+        this.mem_addr = param.getMemAddr();
+        this.mem_email = param.getMemEmail();
+        this.mem_nick = param.getMemNick();
+        this.mem_gender = param.getMemGender();
+        this.height = param.getHeight();
+        this.weight = param.getWeight();
+        this.bmi = param.getBmi();
+        this.muscle = param.getMuscle();
+        this.fat_per = param.getFatPer();
+        this.joined_at = param.getJoinedAt();
+        this.mem_role = param.getMemRole();
+    }
+}
+
+
+
+select * from tb_member limit 3;
+
+-- 체질량지수(BMI 계산하기) 
+
+-- 175.0 / 75.1  BMI: 24.52 (과체중)
+
+-- PL/SQL : function/procedure/trigger 등 
+
+-- BMI 계산식 : 몸무게(kg) / (신장)*(신장, m)
+
+-- 75.1 / (175.0/100) * (175.0/100)
+
+delimiter $$
+create trigger trg_bmi 
+before insert on tb_member 
+for each row 
+begin 
+    -- 75.1 / (175.0/100) * (175.0/100)
+	-- set NEW.bmi = NEW.weight / ((NEW.height/100)* (NEW.height/100));
+    set NEW.bmi = NEW.weight / POWER(NEW.height/100, 2);
+end$$
+
+delimiter ;
+
+
+> 말풍선(Verbose, 말이 많은) : 상세 모드 
+
+
+> 게시판 삭제된 욕설글 자동백업 트리거 
+
+-- 테이블 생성 SQL - tb_community_delete
+CREATE TABLE tb_community_delete
+(
+    `delete_idx`    INT UNSIGNED     NOT NULL    AUTO_INCREMENT COMMENT '삭제 식별자', 
+    `comm_id`       INT UNSIGNED     NOT NULL    COMMENT '글 식별자', 
+    `comm_title`    VARCHAR(1500)    NOT NULL    COMMENT '글 제목', 
+    `comm_content`  TEXT             NOT NULL    COMMENT '글 내용', 
+    `comm_file`     VARCHAR(1000)    NOT NULL    COMMENT '글 첨부파일', 
+    `created_at`    TIMESTAMP        NOT NULL    COMMENT '글 작성일자', 
+    `comm_likes`    INT              NOT NULL    COMMENT '글 좋아요수', 
+    `comm_views`    INT              NOT NULL    COMMENT '글 조회수', 
+    `mem_id`        VARCHAR(30)      NOT NULL    COMMENT '글 작성자', 
+    `deleted_at`    DATETIME         NOT NULL    DEFAULT NOW() COMMENT '삭제 시간', 
+     PRIMARY KEY (delete_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_community_delete
+ALTER TABLE tb_community_delete COMMENT '게시판 삭제글';
+
+
+DELIMITER $$ 
+
+CREATE TRIGGER trg_community_delete 
+BEFORE DELETE ON tb_community 
+FOR EACH ROW 
+
+BEGIN 
+		-- tb_community 테이블에서 삭제되는 데이터를 중간에서 가로채가지고, tb_community_delete 테이블로 넣어준다. 
+        
+        INSERT INTO tb_community_delete (comm_id, comm_title, comm_content, comm_file, created_at, comm_likes, comm_views, mem_id, deleted_at) 
+        VALUES (OLD.comm_id, OLD.comm_title, OLD.comm_content, OLD.comm_file, OLD.created_at, OLD.comm_likes, OLD.comm_views, OLD.mem_id, NOW());
+
+END$$
+
+DELIMITER ;
+
+
+-- 비밀번호 암호화 : AES / MD5 / SHA(SHA1) / SHA2
+
+SELECT MD5('1234'); # 81dc9bdb52d04dc20036dbd8313ed055
+SELECT SHA('1234'); # 7110eda4d09e062aa5e4a390b0a572ac0d2c0220
+SELECT SHA2('1234', 224); # 99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319
+SELECT SHA2('1234', 256); # 03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4
+SELECT SHA2('1234', 384); # 504f008c8fcf8b2ed5dfcde752fc5464ab8ba064215d9c5b5fc486af3d9ab8c81b14785180d2ad7cee1ab792ad44798c
+SELECT SHA2('1234', 512); # d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db
+
+
+INSERT INTO tb_member (mem_id, mem_pw, mem_name, mem_phone, mem_birthdate, mem_addr, mem_email, mem_nick, mem_gender, height, weight, bmi, muscle, fat_per, joined_at, mem_role) 
+VALUES ('mem_id 15', sha2('mem_pw 15', 512), 'mem_name 1', 'mem_phone 1', NOW(), 'mem_addr 1', 'mem_email 1', 'mem_nick 1', 'N', 175.0, 75.1, 1, 1, 1, NOW(), 'N');
+
+SELECT * FROM tb_member ORDER BY joined_at DESC LIMIT 15;
+
+
+SELECT LENGTH('d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db');
+
+-- 자바에서 insert 처리할 때, 
+-- INSERT INTO tb_member VALUES(?, sha2(?, 512), ?, ?,....);
+
+-- 자바에서 로그인 처리 
+
+SELECT COUNT(*) 
+FROM tb_member 
+WHERE mem_id = p_mem_id AND mem_pw = p_mem_pw;
+
+
+-- login = SELECT COUNT(*) 
+-- FROM tb_member 
+-- WHERE mem_id = 'mem_id 15' AND mem_pw = sha2('mem_pw 15',512);
+-- if login > 0 then '로그인 성공' else '로그인 실패';
+----------------------------------------------------------------------------------
+-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+
+-- tb_fitness_center Table Create SQL
+-- 테이블 생성 SQL - tb_fitness_center
+use cgi_23k_big23_p2_3;
+
+
+CREATE TABLE tb_fitness_center
+(
+    `center_idx`   INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '센터 식별자', 
+    `center_name`  VARCHAR(50)     NOT NULL    COMMENT '센터 이름', 
+    `center_addr`  VARCHAR(800)    NOT NULL    COMMENT '센터 주소', 
+    `center_tel`   VARCHAR(20)     NOT NULL    COMMENT '센터 전화', 
+     PRIMARY KEY (center_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_fitness_center
+ALTER TABLE tb_fitness_center COMMENT '피트니스 센터';
+
+
+-- tb_trainer Table Create SQL
+-- 테이블 생성 SQL - tb_trainer
+CREATE TABLE tb_trainer
+(
+    `trn_idx`      INT UNSIGNED     NOT NULL    AUTO_INCREMENT COMMENT '트레이너 식별자', 
+    `trn_name`     VARCHAR(50)      NOT NULL    COMMENT '트레이너 이름', 
+    `trn_phone`    VARCHAR(20)      NOT NULL    COMMENT '트레이너 연락처', 
+    `trn_info`     VARCHAR(2000)    NOT NULL    COMMENT '트레이너 정보', 
+    `trn_carrier`  VARCHAR(2000)    NOT NULL    COMMENT '트레이너 경력', 
+    `center_idx`   INT UNSIGNED     NOT NULL    COMMENT '센터 식별자', 
+    `trn_img`      VARCHAR(1000)    NOT NULL    COMMENT '트레이너 사진', 
+    `joined_at`    DATETIME         NOT NULL    COMMENT '트레이너 입사일자', 
+     PRIMARY KEY (trn_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_trainer
+ALTER TABLE tb_trainer COMMENT '트레이너 정보';
+
+-- Foreign Key 설정 SQL - tb_trainer(center_idx) -> tb_fitness_center(center_idx)
+ALTER TABLE tb_trainer
+    ADD CONSTRAINT FK_tb_trainer_center_idx_tb_fitness_center_center_idx FOREIGN KEY (center_idx)
+        REFERENCES tb_fitness_center (center_idx) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_trainer(center_idx)
+-- ALTER TABLE tb_trainer
+-- DROP FOREIGN KEY FK_tb_trainer_center_idx_tb_fitness_center_center_idx;
+
+
+-- tb_personal_training Table Create SQL
+-- 테이블 생성 SQL - tb_personal_training
+CREATE TABLE tb_personal_training
+(
+    `pt_idx`     INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT 'PT 식별자', 
+    `trn_idx`    INT UNSIGNED    NOT NULL    COMMENT '트레이너 식별자', 
+    `pt_date`    DATE            NOT NULL    COMMENT 'PT 날짜', 
+    `pt_st_dt`   TIME            NOT NULL    COMMENT 'PT 시작시간', 
+    `pt_ed_dt`   TIME            NOT NULL    COMMENT 'PT 종료 시간', 
+    `pt_limits`  INT             NOT NULL    COMMENT 'PT 인원수', 
+    `pt_status`  CHAR(1)         NOT NULL    COMMENT '마감상태', 
+     PRIMARY KEY (pt_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_personal_training
+ALTER TABLE tb_personal_training COMMENT 'PT 일정';
+
+-- Foreign Key 설정 SQL - tb_personal_training(trn_idx) -> tb_trainer(trn_idx)
+ALTER TABLE tb_personal_training
+    ADD CONSTRAINT FK_tb_personal_training_trn_idx_tb_trainer_trn_idx FOREIGN KEY (trn_idx)
+        REFERENCES tb_trainer (trn_idx) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_personal_training(trn_idx)
+-- ALTER TABLE tb_personal_training
+-- DROP FOREIGN KEY FK_tb_personal_training_trn_idx_tb_trainer_trn_idx;
+
+
+-- tb_member Table Create SQL
+-- 테이블 생성 SQL - tb_member
+CREATE TABLE tb_member
+(
+    `mem_id`         VARCHAR(30)      NOT NULL    COMMENT '회원 아이디', 
+    `mem_pw`         VARCHAR(30)      NOT NULL    COMMENT '회원 비밀번호', 
+    `mem_name`       VARCHAR(40)      NOT NULL    COMMENT '회원 이름', 
+    `mem_phone`      VARCHAR(20)      NOT NULL    COMMENT '회원 연락처', 
+    `mem_birthdate`  DATE             NOT NULL    COMMENT '회원 생년월일', 
+    `mem_addr`       VARCHAR(800)     NOT NULL    COMMENT '회원 주소', 
+    `mem_email`      VARCHAR(50)      NOT NULL    COMMENT '회원 이메일', 
+    `mem_nick`       VARCHAR(20)      NOT NULL    COMMENT '회원 닉네임', 
+    `mem_gender`     CHAR(1)          NOT NULL    COMMENT '회원 성별', 
+    `height`         NUMERIC(4, 1)    NOT NULL    COMMENT '회원 키', 
+    `weight`         NUMERIC(4, 1)    NOT NULL    COMMENT '회원 체중', 
+    `bmi`            NUMERIC(5, 2)    NOT NULL    COMMENT '체질량지수', 
+    `muscle`         NUMERIC(5, 2)    NOT NULL    COMMENT '근육량', 
+    `fat_per`        NUMERIC(5, 2)    NOT NULL    COMMENT '체지방률', 
+    `joined_at`      DATETIME         NOT NULL    COMMENT '회원 가입일자', 
+    `mem_role`       CHAR(1)          NOT NULL    COMMENT '회원 구분', 
+     PRIMARY KEY (mem_id)
+);
+
+-- 테이블 Comment 설정 SQL - tb_member
+ALTER TABLE tb_member COMMENT '회원정보';
+
+
+-- tb_exercise Table Create SQL
+-- 테이블 생성 SQL - tb_exercise
+CREATE TABLE tb_exercise
+(
+    `ex_idx`       INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '운동 식별자', 
+    `ex_name`      VARCHAR(50)     NOT NULL    COMMENT '운동 명', 
+    `ex_category`  VARCHAR(50)     NOT NULL    COMMENT '운동 카테고리', 
+    `ex_dtls`      VARCHAR(50)     NOT NULL    COMMENT '운동 세부분류', 
+    `ex_calories`  DECIMAL(5,1)    NOT NULL    COMMENT '운동 소모칼로리', 
+    `ex_duration`  INT             NOT NULL    COMMENT '운동 시간', 
+    `ex_strength`  VARCHAR(20)     NOT NULL    COMMENT '운동 강도', 
+     PRIMARY KEY (ex_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_exercise
+ALTER TABLE tb_exercise COMMENT '운동정보';
+
+
+-- tb_voucher Table Create SQL
+-- 테이블 생성 SQL - tb_voucher
+CREATE TABLE tb_voucher
+(
+    `vc_idx`      INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '이용권 식별자', 
+    `vc_name`     VARCHAR(50)     NOT NULL    COMMENT '이용권 이름', 
+    `vc_price`    VARCHAR(50)     NOT NULL    COMMENT '이용권 금액', 
+    `center_idx`  INT UNSIGNED    NOT NULL    COMMENT '센터 식별자', 
+     PRIMARY KEY (vc_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_voucher
+ALTER TABLE tb_voucher COMMENT '이용권(바우처)';
+
+-- Foreign Key 설정 SQL - tb_voucher(center_idx) -> tb_fitness_center(center_idx)
+ALTER TABLE tb_voucher
+    ADD CONSTRAINT FK_tb_voucher_center_idx_tb_fitness_center_center_idx FOREIGN KEY (center_idx)
+        REFERENCES tb_fitness_center (center_idx) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_voucher(center_idx)
+-- ALTER TABLE tb_voucher
+-- DROP FOREIGN KEY FK_tb_voucher_center_idx_tb_fitness_center_center_idx;
+
+
+-- tb_accumulated_exercise Table Create SQL
+-- 테이블 생성 SQL - tb_accumulated_exercise
+CREATE TABLE tb_accumulated_exercise
+(
+    `acc_idx`     INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '누적 식별자', 
+    `mem_id`      VARCHAR(30)     NOT NULL    COMMENT '회원 아이디', 
+    `ex_idx`      INT UNSIGNED    NOT NULL    COMMENT '운동 식별자', 
+    `ex_date`     DATE            NOT NULL    COMMENT '운동 날짜', 
+    `ex_done`     CHAR(1)         NOT NULL    COMMENT '운동 완료 여부', 
+    `ex_reps`     INT             NOT NULL    COMMENT '운동 횟수', 
+    `ex_time`     INT             NOT NULL    COMMENT '소요 시간', 
+    `created_at`  TIMESTAMP       NOT NULL    COMMENT '등록 일자', 
+     PRIMARY KEY (acc_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_accumulated_exercise
+ALTER TABLE tb_accumulated_exercise COMMENT '누적 운동량';
+
+-- Foreign Key 설정 SQL - tb_accumulated_exercise(mem_id) -> tb_member(mem_id)
+ALTER TABLE tb_accumulated_exercise
+    ADD CONSTRAINT FK_tb_accumulated_exercise_mem_id_tb_member_mem_id FOREIGN KEY (mem_id)
+        REFERENCES tb_member (mem_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_accumulated_exercise(mem_id)
+-- ALTER TABLE tb_accumulated_exercise
+-- DROP FOREIGN KEY FK_tb_accumulated_exercise_mem_id_tb_member_mem_id;
+
+-- Foreign Key 설정 SQL - tb_accumulated_exercise(ex_idx) -> tb_exercise(ex_idx)
+ALTER TABLE tb_accumulated_exercise
+    ADD CONSTRAINT FK_tb_accumulated_exercise_ex_idx_tb_exercise_ex_idx FOREIGN KEY (ex_idx)
+        REFERENCES tb_exercise (ex_idx) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_accumulated_exercise(ex_idx)
+-- ALTER TABLE tb_accumulated_exercise
+-- DROP FOREIGN KEY FK_tb_accumulated_exercise_ex_idx_tb_exercise_ex_idx;
+
+
+-- tb_accumulated_change Table Create SQL
+-- 테이블 생성 SQL - tb_accumulated_change
+CREATE TABLE tb_accumulated_change
+(
+    `change_idx`  INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '변화 식별자', 
+    `mem_id`      VARCHAR(30)     NOT NULL    COMMENT '회원 아이디', 
+    `height`      NUMERIC(4,1)    NOT NULL    COMMENT '키', 
+    `weight`      NUMERIC(4,1)    NOT NULL    COMMENT '체중', 
+    `bmi`         NUMERIC(5,2)    NOT NULL    COMMENT '체질량지수(BMI)', 
+    `muscle`      NUMERIC(5,2)    NOT NULL    COMMENT '근육량', 
+    `fat_per`     NUMERIC(5,2)    NOT NULL    COMMENT '체지방률', 
+    `created_at`  TIMESTAMP       NOT NULL    COMMENT '기록 날짜', 
+     PRIMARY KEY (change_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_accumulated_change
+ALTER TABLE tb_accumulated_change COMMENT '누적 신체 변화량';
+
+-- Foreign Key 설정 SQL - tb_accumulated_change(mem_id) -> tb_member(mem_id)
+ALTER TABLE tb_accumulated_change
+    ADD CONSTRAINT FK_tb_accumulated_change_mem_id_tb_member_mem_id FOREIGN KEY (mem_id)
+        REFERENCES tb_member (mem_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_accumulated_change(mem_id)
+-- ALTER TABLE tb_accumulated_change
+-- DROP FOREIGN KEY FK_tb_accumulated_change_mem_id_tb_member_mem_id;
+
+
+-- tb_standard_data Table Create SQL
+-- 테이블 생성 SQL - tb_standard_data
+CREATE TABLE tb_standard_data
+(
+    `std_idx`  INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '표준 식별자', 
+    `gender`   CHAR(1)         NOT NULL    COMMENT '성별', 
+    `height`   NUMERIC(4,1)    NOT NULL    COMMENT '키', 
+    `weight`   NUMERIC(4,1)    NOT NULL    COMMENT '체중', 
+    `bmi`      NUMERIC(5,2)    NOT NULL    COMMENT '체질량지수(BMI)', 
+    `muscle`   NUMERIC(5,2)    NOT NULL    COMMENT '근육량', 
+    `fat_per`  NUMERIC(5,2)    NOT NULL    COMMENT '체지방률', 
+     PRIMARY KEY (std_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_standard_data
+ALTER TABLE tb_standard_data COMMENT '표준 데이터';
+
+
+-- tb_purchase Table Create SQL
+-- 테이블 생성 SQL - tb_purchase
+CREATE TABLE tb_purchase
+(
+    `pc_idx`     INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '구매 식별자', 
+    `mem_id`     VARCHAR(30)     NOT NULL    COMMENT '회원 아이디', 
+    `vc_idx`     INT UNSIGNED    NOT NULL    COMMENT '이용권 식별자', 
+    `bought_at`  DATETIME        NOT NULL    COMMENT '구매 날짜', 
+     PRIMARY KEY (pc_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_purchase
+ALTER TABLE tb_purchase COMMENT '이용권 구매';
+
+-- Foreign Key 설정 SQL - tb_purchase(pc_idx) -> tb_voucher(vc_idx)
+ALTER TABLE tb_purchase
+    ADD CONSTRAINT FK_tb_purchase_pc_idx_tb_voucher_vc_idx FOREIGN KEY (pc_idx)
+        REFERENCES tb_voucher (vc_idx) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_purchase(pc_idx)
+-- ALTER TABLE tb_purchase
+-- DROP FOREIGN KEY FK_tb_purchase_pc_idx_tb_voucher_vc_idx;
+
+-- Foreign Key 설정 SQL - tb_purchase(mem_id) -> tb_member(mem_id)
+ALTER TABLE tb_purchase
+    ADD CONSTRAINT FK_tb_purchase_mem_id_tb_member_mem_id FOREIGN KEY (mem_id)
+        REFERENCES tb_member (mem_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_purchase(mem_id)
+-- ALTER TABLE tb_purchase
+-- DROP FOREIGN KEY FK_tb_purchase_mem_id_tb_member_mem_id;
+
+
+-- tb_reservation Table Create SQL
+-- 테이블 생성 SQL - tb_reservation
+CREATE TABLE tb_reservation
+(
+    `res_idx`        INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '예약 식별자', 
+    `pt_idx`         INT UNSIGNED    NOT NULL    COMMENT 'PT 식별자', 
+    `mem_id`         VARCHAR(30)     NOT NULL    COMMENT '회원 아이디', 
+    `created_at`     TIMESTAMP       NOT NULL    COMMENT '등록 시간', 
+    `res_status`     VARCHAR(30)     NOT NULL    COMMENT '예약 상태', 
+    `res_memo`       VARCHAR(300)    NULL        COMMENT '예약 메모', 
+    `cancel_yn`      CHAR(1)         NULL        COMMENT '취소 여부', 
+    `cancel_reason`  VARCHAR(300)    NULL        COMMENT '취소 사유', 
+     PRIMARY KEY (res_idx)
+);
+
+-- 테이블 Comment 설정 SQL - tb_reservation
+ALTER TABLE tb_reservation COMMENT 'PT 예약';
+
+-- Foreign Key 설정 SQL - tb_reservation(mem_id) -> tb_member(mem_id)
+ALTER TABLE tb_reservation
+    ADD CONSTRAINT FK_tb_reservation_mem_id_tb_member_mem_id FOREIGN KEY (mem_id)
+        REFERENCES tb_member (mem_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_reservation(mem_id)
+-- ALTER TABLE tb_reservation
+-- DROP FOREIGN KEY FK_tb_reservation_mem_id_tb_member_mem_id;
+
+-- Foreign Key 설정 SQL - tb_reservation(pt_idx) -> tb_personal_training(pt_idx)
+ALTER TABLE tb_reservation
+    ADD CONSTRAINT FK_tb_reservation_pt_idx_tb_personal_training_pt_idx FOREIGN KEY (pt_idx)
+        REFERENCES tb_personal_training (pt_idx) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - tb_reservation(pt_idx)
+-- ALTER TABLE tb_reservation
+-- DROP FOREIGN KEY FK_tb_reservation_pt_idx_tb_personal_training_pt_idx;

@@ -1,0 +1,79 @@
+package com.smhrd.myapp.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.w3c.dom.Entity;
+
+import com.smhrd.myapp.entity.MemberEntity;
+import com.smhrd.myapp.mapper.MemberMapper;
+import com.smhrd.myapp.vo.MemberVO;
+
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+public class MemberController {
+
+	@Autowired
+	private MemberMapper mapper;
+
+	@GetMapping("/")
+	public String index() {
+		return "index";
+	}
+
+	@GetMapping("/mypage")
+	public String mypage() {
+		return "mypage";
+	}
+
+	@PostMapping("/login")
+	public String login(MemberVO vo, RedirectAttributes rttr) {
+		MemberEntity Entity = mapper.findByIdAndPw(vo.getId(), vo.getPw());
+		MemberVO myData = new MemberVO(Entity.getId(), Entity.getPw(), Entity.getName(), Entity.getTel());
+		rttr.addAttribute("myData",myData.getId());
+		// 주의할 점 : 들어간 value의 형태를 String으로 변환가능한 형태로 넣어주기
+		// redirect:/mypage?myData=
+		// /login 페이지 유효
+		// /mypage 페이지 유효
+		return "redirect:/mypage";
+	}
+	@GetMapping("/join")
+	public String join() {
+		return "redirect:/join";
+		
+	}
+	
+	@PostMapping("/join-process")
+	public String joinProcess(MemberVO vo) {
+	    // 회원가입 로직 구현
+	    // vo에 있는 데이터를 이용하여 회원 정보를 저장
+	    
+	    // 회원가입 성공 시 index 페이지로 이동
+	    return "/";
+	}
+
+//////////////////session/////////////////////////////////	
+//	@PostMapping("/login")
+//	public String login(MemberVO vo, HttpSession session) {
+////		mapper.login(vo);
+//		//JPA(mapper==repository)
+//		MemberEntity Entity =  mapper.findByIdAndPw(vo.getId(),vo.getPw());
+//		System.out.println("entity>>"+Entity);
+//		MemberVO myData= new MemberVO(Entity.getId(),Entity.getPw(),Entity.getName(),Entity.getTel());
+//		// Model : request 경량화 버전
+//		// --> 응답을 되돌려주기 전까지만 유효
+//		
+//		// mypage.jsp 하나 만들어서
+//		// 받아온 사용자의 정보를 pw빼고 전부 출력
+//		//Entity(JPA용)->vo(java,jsp용)로 변경
+//		session.setAttribute("myData", myData);
+//		
+//		return "redirect:/mypage";
+//		// 요청2 응답2
+//	}
+
+}

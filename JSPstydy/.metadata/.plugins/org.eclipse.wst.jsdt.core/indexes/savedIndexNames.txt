@@ -1,0 +1,11 @@
+INDEX VERSION 1.4+C:\Users\smhrd\Desktop\JSPstydy\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3451812014.index
+3483842200.index
+3784663535.index
+678002571.index
+1426875927.index
+2259753476.index
+3237837903.index
+1087606103.index
+2992610505.index
+1960459765.index

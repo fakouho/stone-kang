@@ -1,0 +1,59 @@
+package com.smhrd.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.smhrd.db.BoardMapper;
+import com.smhrd.model.BoardVO;
+
+
+public class BookControlloer {
+
+	@Autowired
+	private BoardMapper mapper;
+	
+	
+	@RequestMapping("/bookList")
+	public String deleteBoard(@PathVariable("idx") int idx) {
+	    mapper.boardDelete(idx);
+	    
+	    return "redirect:/";
+	}
+	
+	@GetMapping("/boardContent/{idx}")
+	public String boardContent(@PathVariable("idx") int idx, Model model) {
+		System.out.println("수집한데이터>>" + idx);
+		BoardVO result = mapper.boardContent(idx);
+		model.addAttribute("board",result);
+		return "boardContent";
+	}
+
+	@PostMapping("/register") // -> post전송방식일대만 메소드 실행
+	public String register(BoardVO vo) {
+
+		System.out.print(vo);
+		mapper.register(vo);
+
+		return "redirect:/";
+	}
+
+	@GetMapping("/register")
+	public String register() {
+		return "register";
+	}
+	@RequestMapping("/") // "/" 요청이 들어왔을 때 board 메소드를 실행
+	public String board(Model model) {
+		List<BoardVO> list = mapper.boardList();
+		model.addAttribute("list", list);
+		return "board";
+	}
+
+}

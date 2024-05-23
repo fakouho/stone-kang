@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="txt1">안녕하세요</h1>
+    <input type="text" id="txt2" value="안녕">
+    <button onclick="print()">출력</button>
+
+    <script>
+        alert(document.getElementById("txt1").innerHTML)
+       function print() {
+            alert(document.getElementById("txt2").value)
+       } 
+
+       // input테그의 모든 데이터는 valus라는 속성에 저장
+       // 값을 꺼내거나 수정할 때 innerhtml개념이 아닌 .value 접근
+       // name이나 id는 언제 쓰는 거냐? -> 백엔드에서 값을 구분 지을 때 사용
+    </script>
+</body>
+</html>

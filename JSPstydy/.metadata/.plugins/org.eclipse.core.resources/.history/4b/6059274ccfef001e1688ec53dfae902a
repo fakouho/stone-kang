@@ -1,0 +1,11 @@
+@charset "UTF-8";
+@charset "UTF-8";
+.indexDC{
+    font-size: 20px;
+    line-height: 1.5;
+    margin-left: 47%;
+}
+.chaname {
+    font-weight: 700;
+    font-size: 1.0vw;
+}
