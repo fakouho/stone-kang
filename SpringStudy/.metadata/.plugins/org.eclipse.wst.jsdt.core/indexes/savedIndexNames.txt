@@ -1,6 +1,0 @@
-INDEX VERSION 1.4+C:\Users\smhrd\Desktop\KangStudy\SpringStudy\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3654390819.index
-937424143.index
-2771498034.index
-1087948185.index
-2417996538.index
